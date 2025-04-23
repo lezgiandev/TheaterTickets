@@ -13,16 +13,24 @@ class GenreSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class SessionSerializer(serializers.ModelSerializer):
+    theatre = TheatreSerializer()
+    genre = GenreSerializer()
+
     class Meta:
         model = Session
-        fields = '__all__'
+        fields = ('id', 'title', 'picture', 'theatre', 'genre', 'description', 'date_time', 'duration', 'price')
 
 class SeatSerializer(serializers.ModelSerializer):
+    theatre = TheatreSerializer()
+
     class Meta:
         model = Seat
-        fields = ('row', 'number')
+        fields = ('id', 'theatre', 'row', 'number')
 
 class BookingSerializer(serializers.ModelSerializer):
+    session = serializers.PrimaryKeyRelatedField(queryset=Session.objects.all())
+    seat = serializers.PrimaryKeyRelatedField(queryset=Seat.objects.all())
+
     class Meta:
         model = Booking
         fields = '__all__'
