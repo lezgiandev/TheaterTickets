@@ -8,7 +8,7 @@
         </h1>
         <p class="text-neutral-400">История всех ваших бронирований</p>
       </div>
-      
+
       <div
           v-if="bookingStore.bookings.length === 0"
           class="bg-neutral-800/30 backdrop-blur-lg p-8 rounded-2xl shadow-2xl border border-neutral-700/50 text-center flex flex-col items-center gap-6"
@@ -119,7 +119,6 @@ import { useBookingStore } from '@/stores/bookingStore';
 import { useAuthStore } from '@/stores/authStore';
 import { useRouter } from 'vue-router';
 import {
-  AlertCircleIcon,
   ArrowRightIcon,
   TicketIcon,
   HomeIcon,
