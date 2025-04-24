@@ -13,13 +13,14 @@ export const useAuthStore = defineStore('auth', () => {
         password: string
     }) => {
         try {
-            const response = await loginUser(credentials);
-            token.value = response.access;
+            const data = await loginUser(credentials);
+            token.value = data.auth_token;
             isAuthenticated.value = true;
-            localStorage.setItem('token', response.access);
+            localStorage.setItem('token', data.auth_token);
             await router.push('/');
         } catch (error) {
-            console.error('Login failed', error);
+            console.error('Registration failed', error);
+            throw error;
         }
     };
 
@@ -35,6 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
             await router.push('/');
         } catch (error) {
             console.error('Registration failed', error);
+            throw error;
         }
     };
 
@@ -46,6 +48,7 @@ export const useAuthStore = defineStore('auth', () => {
             await router.push('/login');
         } catch (error) {
             console.error('Navigation error:', error);
+            throw error;
         }
     };
 

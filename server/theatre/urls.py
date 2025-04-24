@@ -3,8 +3,10 @@ from .views import (
     SessionListView,
     SessionDetailView,
     SeatAvailabilityView,
-    BookingCreateView,
-    UserBookingsView, TheatreListView, GenreListView
+    UserBookingsView,
+    TheatreListView,
+    GenreListView,
+    BookingCreateView
 )
 
 urlpatterns = [
@@ -13,6 +15,6 @@ urlpatterns = [
     path('genres/', GenreListView.as_view(), name='genre-list'),
     path('sessions/<int:pk>/', SessionDetailView.as_view(), name='session-detail'),
     path('sessions/<int:session_id>/seats/', SeatAvailabilityView.as_view(), name='seat-availability'),
-    path('bookings/', BookingCreateView.as_view(), name='booking-create'),
+    path('bookings/create/', BookingCreateView.as_view(), name='booking-create'),
     path('user/bookings/', UserBookingsView.as_view(), name='user-bookings'),
 ]

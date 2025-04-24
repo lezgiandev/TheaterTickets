@@ -35,6 +35,7 @@ export interface Seat {
 }
 
 export interface SeatResponse {
+  id: number
   row: number
   number: number
   is_available: boolean

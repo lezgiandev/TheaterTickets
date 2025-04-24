@@ -3,7 +3,7 @@ import {ref} from 'vue';
 import {getGenres, getSeats, getSessionById, getSessions, getTheatres,} from '@/services/sessionService';
 import type {Genre, SeatResponse, Session, Theatre} from '@/types';
 
-export const useDictionaryStore = defineStore('sessions', () => {
+export const useSessionStore = defineStore('sessions', () => {
     const sessions = ref<Session[]>([]);
     const genres = ref<Genre[]>([]);
     const theatres = ref<Theatre[]>([])
@@ -41,15 +41,15 @@ export const useDictionaryStore = defineStore('sessions', () => {
         isLoading.value = true;
         error.value = null;
         try {
-            currentSession.value = await getSessionById(sessionId);
+            const response = await getSessionById(sessionId);
+            currentSession.value = response;
 
             if (!sessions.value.find(s => s.id === sessionId)) {
-                sessions.value.push(currentSession.value);
+                sessions.value.push(response);
             }
         } catch (err) {
-            error.value = 'Ошибка при загрузке сессии';
-            console.error('Ошибка при загрузке сессии:', err);
-            throw err;
+            error.value = 'Ошибка при загрузке сеанса';
+            console.error('Ошибка при загрузке сеанса:', err);
         } finally {
             isLoading.value = false;
         }
@@ -91,13 +91,19 @@ export const useDictionaryStore = defineStore('sessions', () => {
         }
     };
 
+    const clearCurrentSession = () => {
+        currentSession.value = null;
+    };
+
     return {
         sessions,
         genres,
+        seats,
         theatres,
         currentSession,
         isLoading,
         error,
+        clearCurrentSession,
         fetchGenres,
         fetchSeats,
         fetchSessions,

@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { Booking } from "@/types";
-import {createBooking, getBookings} from "@/services/bookingService.ts";
+import { createBooking, getBookings } from "@/services/bookingService.ts";
 
-export const useDictionaryStore = defineStore('bookings', () => {
+export const useBookingStore = defineStore('bookings', () => {
     const bookings = ref<Booking[]>([]);
 
     const isLoading = ref<boolean>(false);
@@ -25,16 +25,14 @@ export const useDictionaryStore = defineStore('bookings', () => {
         isLoading.value = true;
         error.value = null;
         try {
-            if (isBooked(sessionId, seatId)) {
-                console.warn('Место уже забронированно');
-                return;
-            }
-
-            await createBooking(sessionId, seatId);
-            await fetchBookings();
+            const newBooking = await createBooking(sessionId, seatId);
+            bookings.value.push(newBooking);
         } catch (err) {
-            console.error('Ошибка при бронировании:', err);
+            error.value = 'Ошибка при создании бронирования';
+            console.error('Ошибка бронирования:', err);
             throw err;
+        } finally {
+            isLoading.value = false;
         }
     };
 
@@ -49,8 +47,8 @@ export const useDictionaryStore = defineStore('bookings', () => {
         bookings,
         isLoading,
         error,
-        fetchBookings,
         addBooking,
+        fetchBookings,
         isBooked
     }
 });

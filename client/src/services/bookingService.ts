@@ -19,17 +19,19 @@ export const getBookings = async (): Promise<Booking[]> => {
 
 export const createBooking = async (sessionId: number, seatId: number): Promise<Booking> => {
     try {
-        const response = await axios.post<Booking>(`${API_URL}/bookings/`,
+        const response = await axios.post<Booking>(
+            `${API_URL}/bookings/create/`,
             {
                 session: sessionId,
                 seat: seatId
             },
             {
-            headers: {
-                Authorization: `Token ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json'
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }
             }
-        });
+        );
         return response.data;
     } catch (error) {
         console.error('Ошибка при создании бронирования:', error);

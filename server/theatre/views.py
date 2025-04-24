@@ -4,8 +4,20 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from .filters import SessionFilter
-from .models import Session, Seat, Booking, Theatre, Genre
-from .serializers import SessionSerializer, BookingSerializer, TheatreSerializer, GenreSerializer
+from .models import (
+    Session,
+    Seat,
+    Booking,
+    Theatre,
+    Genre
+)
+from .serializers import (
+    SessionSerializer,
+    TheatreSerializer,
+    GenreSerializer,
+    BookingReadSerializer,
+    BookingWriteSerializer
+)
 from rest_framework import filters as rest_filters
 
 class TheatreListView(generics.ListAPIView):
@@ -27,6 +39,7 @@ class SessionListView(generics.ListAPIView):
     ordering_fields = ['date_time', 'price', 'title']
     ordering = ['date_time']
 
+
 class SessionDetailView(generics.RetrieveAPIView):
     queryset = Session.objects.all()
     serializer_class = SessionSerializer
@@ -41,6 +54,7 @@ class SeatAvailabilityView(APIView):
         for seat in seats:
             is_booked = Booking.objects.filter(session=session, seat=seat).exists()
             seats_data.append({
+                'id': seat.id,
                 'row': seat.row,
                 'number': seat.number,
                 'is_available': not is_booked
@@ -48,17 +62,21 @@ class SeatAvailabilityView(APIView):
         return Response(seats_data)
 
 
+class UserBookingsView(generics.ListAPIView):
+    serializer_class = BookingReadSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Booking.objects.filter(user=self.request.user).select_related(
+            'session__theatre',
+            'session__genre',
+            'seat__theatre'
+        )
+
+
 class BookingCreateView(generics.CreateAPIView):
-    serializer_class = BookingSerializer
+    serializer_class = BookingWriteSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
-
-class UserBookingsView(generics.ListAPIView):
-    serializer_class = BookingSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return Booking.objects.filter(user=self.request.user)
