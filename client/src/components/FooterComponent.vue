@@ -66,7 +66,7 @@
 
       <div class="border-t border-neutral-800 mt-12 pt-8 text-center">
         <p class="text-neutral-500">
-          © 2025 <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400">Teatroo</span>.
+          © 2025 <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400">Tickets</span>.
           Все права защищены.
         </p>
       </div>

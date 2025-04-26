@@ -8,11 +8,11 @@
         <div class="animate-fade-in">
           <h1 class="text-6xl md:text-8xl font-extrabold mb-6 tracking-tighter">
             <span class="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-              Teatroo
+              Tickets
             </span>
           </h1>
           <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-12 text-neutral-300 leading-relaxed">
-            Погрузитесь в мир театральных постановок с интерактивным выбором мест
+            Покупка билетов в театр с интерактивным выбором мест
           </p>
           <router-link
               to="/sessions"
@@ -58,7 +58,7 @@
           <h2 class="text-4xl font-extrabold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent mb-4">
             Скоро в театре
           </h2>
-          <p class="text-neutral-400 max-w-2xl mx-auto">Откройте для себя предстоящие премьеры и специальные события</p>
+          <p class="text-neutral-400 max-w-2xl mx-auto">Предстоящие премьеры и специальные события</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <div

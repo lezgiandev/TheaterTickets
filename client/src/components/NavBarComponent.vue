@@ -7,7 +7,7 @@
             to="/"
             class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400 text-2xl font-bold tracking-tighter"
         >
-          Teatroo
+          Tickets
         </router-link>
 
         <!-- Десктопное меню -->
